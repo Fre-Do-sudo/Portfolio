@@ -12,6 +12,7 @@ import type { MotionStyle, MotionValue } from "framer-motion";
 import {
   type ReactNode,
   type PointerEvent as ReactPointerEvent,
+  useCallback,
   useEffect,
   useMemo,
   useRef,
@@ -507,41 +508,148 @@ function Services() {
   );
 }
 
-function ProjectCard({ project, index }: { project: (typeof content.projects)[number]; index: number }) {
-  const ref = useRef<HTMLAnchorElement>(null);
+type Project = (typeof content.projects)[number];
+
+function ProjectCard({ project, index, onOpen }: { project: Project; index: number; onOpen: () => void }) {
+  const ref = useRef<HTMLButtonElement>(null);
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start end", "end start"] });
   const imageY = useTransform(scrollYProgress, [0, 1], [25, -25]);
   const reduceMotion = useReducedMotion();
   return (
-    <motion.a
+    <motion.button
       ref={ref}
-      className={`project-card project-card-${index + 1}`}
-      href={project.link}
+      type="button"
+      className="project-card"
+      onClick={onOpen}
       data-cursor-view
-      initial={reduceMotion ? false : { clipPath: "inset(0 0 100% 0 round 2px)", opacity: 0.6 }}
-      whileInView={{ clipPath: "inset(0 0 0% 0 round 2px)", opacity: 1 }}
+      // The observed element must stay unclipped: a fully clipped target never reports an intersection.
+      initial={reduceMotion ? false : "hidden"}
+      whileInView="shown"
       viewport={{ once: true, amount: 0.18 }}
-      transition={{ duration: reduceMotion ? 0 : 0.8, ease: [0.76, 0, 0.24, 1], delay: index * 0.1 }}
-      aria-label={`View ${project.title}, ${project.category}`}
+      aria-label={`Open ${project.title}, ${project.category}`}
     >
-      <div className="project-image-frame">
-        <motion.img src={project.image} alt={project.alt} loading="lazy" decoding="async" style={{ y: imageY }} />
-        <span className="project-shine" aria-hidden="true" />
-        <span className="project-view" aria-hidden="true">View <span>↗</span></span>
-      </div>
-      <div className="project-meta"><div><h3>{project.title}</h3><span>{project.category}</span></div><span className="project-arrow" aria-hidden="true">↗</span></div>
-    </motion.a>
+      <motion.div
+        className="project-reveal"
+        variants={{
+          hidden: { clipPath: "inset(0 0 100% 0 round 2px)", opacity: 0.6 },
+          shown: { clipPath: "inset(0 0 0% 0 round 2px)", opacity: 1 }
+        }}
+        transition={{ duration: reduceMotion ? 0 : 0.8, ease: [0.76, 0, 0.24, 1], delay: (index % 2) * 0.1 }}
+      >
+        <div className="project-image-frame">
+          <motion.img src={project.image} alt={project.alt} loading="lazy" decoding="async" style={{ y: imageY }} />
+          <span className="project-shine" aria-hidden="true" />
+          <span className="project-view" aria-hidden="true">View <span>↗</span></span>
+          {project.live && <span className="project-badge"><span className="status-dot" /> Live</span>}
+        </div>
+        <div className="project-meta">
+          <div>
+            <h3>{project.title}</h3>
+            <span>{project.category}</span>
+          </div>
+          <span className="project-number" aria-hidden="true">{String(index + 1).padStart(2, "0")}</span>
+        </div>
+      </motion.div>
+    </motion.button>
+  );
+}
+
+function ProjectModal({ project, onClose }: { project: Project | null; onClose: () => void }) {
+  const closeRef = useRef<HTMLButtonElement>(null);
+  const reduceMotion = useReducedMotion();
+
+  useEffect(() => {
+    if (!project) return;
+    const previouslyFocused = document.activeElement as HTMLElement | null;
+    const onKey = (event: KeyboardEvent) => {
+      if (event.key === "Escape") onClose();
+    };
+    document.body.style.overflow = "hidden";
+    window.addEventListener("keydown", onKey);
+    closeRef.current?.focus();
+    return () => {
+      document.body.style.overflow = "";
+      window.removeEventListener("keydown", onKey);
+      previouslyFocused?.focus();
+    };
+  }, [project, onClose]);
+
+  return (
+    <AnimatePresence>
+      {project && (
+        <motion.div
+          className="project-modal-backdrop"
+          onClick={onClose}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          transition={{ duration: reduceMotion ? 0 : 0.25 }}
+        >
+          <motion.div
+            className="project-modal"
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="project-modal-title"
+            onClick={(event) => event.stopPropagation()}
+            initial={reduceMotion ? false : { y: 40, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            exit={{ y: 30, opacity: 0 }}
+            transition={{ duration: reduceMotion ? 0 : 0.4, ease: [0.22, 1, 0.36, 1] }}
+          >
+            <button ref={closeRef} type="button" className="project-modal-close" onClick={onClose} aria-label="Close project">✕</button>
+            <div className="project-modal-image">
+              <img src={project.image} alt={project.alt} />
+            </div>
+            <div className="project-modal-body">
+              <div className="project-modal-kicker"><span>{project.category}</span><span>{project.year}</span></div>
+              <h3 id="project-modal-title">{project.title}</h3>
+              <p>{project.description}</p>
+              <div className="service-tags project-tags">{project.tags.map((tag) => <span key={tag}>{tag}</span>)}</div>
+              <div className="project-modal-actions">
+                {project.live && (
+                  <a className="project-action project-action-primary" href={project.live} target="_blank" rel="noreferrer">
+                    Visit live site <span aria-hidden="true">↗</span><span className="sr-only"> (opens in a new tab)</span>
+                  </a>
+                )}
+                {project.code && (
+                  <a className="project-action" href={project.code} target="_blank" rel="noreferrer">
+                    View source code <span aria-hidden="true">↗</span><span className="sr-only"> (opens in a new tab)</span>
+                  </a>
+                )}
+                {!project.live && !project.code && (
+                  <a className="project-action" href="#contact" onClick={onClose}>Ask me for a demo <span aria-hidden="true">↗</span></a>
+                )}
+              </div>
+            </div>
+          </motion.div>
+        </motion.div>
+      )}
+    </AnimatePresence>
   );
 }
 
 function Work() {
+  const [selected, setSelected] = useState<Project | null>(null);
+  const closeModal = useCallback(() => setSelected(null), []);
+  const githubUrl = content.socials.find((social) => social.label === "GitHub")?.href;
   return (
     <section id="work" className="work-section section-pad" data-theme-section="light">
-      <div className="section-label"><span>03 — SELECTED WORK</span><span>A few things made with care</span></div>
-      <div className="work-heading"><h2>Made to<br /><span>make you feel.</span></h2><p>A selection of recent ideas brought to life with lovely people.</p></div>
-      <div className="projects-grid">
-        {content.projects.map((project, index) => <ProjectCard key={project.title} project={project} index={index} />)}
+      <div className="section-label"><span>03 — MY WORK</span><span>{content.projects.length} projects and counting</span></div>
+      <div className="work-heading">
+        <h2>Things<br /><span>I’ve built.</span></h2>
+        <p>Live sites, full-stack apps and design experiments. Tap any project to see it up close.</p>
       </div>
+      <div className="projects-grid">
+        {content.projects.map((project, index) => (
+          <ProjectCard key={project.title} project={project} index={index} onOpen={() => setSelected(project)} />
+        ))}
+      </div>
+      {githubUrl && (
+        <div className="work-more">
+          <a href={githubUrl} className="work-more-link" target="_blank" rel="noreferrer">More on GitHub <span aria-hidden="true">↗</span><span className="sr-only"> (opens in a new tab)</span></a>
+        </div>
+      )}
+      <ProjectModal project={selected} onClose={closeModal} />
     </section>
   );
 }

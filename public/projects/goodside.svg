@@ -1,9 +1,0 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 900">
-  <path fill="#d9ed79" d="M0 0h1200v900H0z"/>
-  <circle cx="882" cy="410" r="250" fill="#f3f0e8"/>
-  <path d="M690 423c0-106 86-192 192-192s192 86 192 192-86 192-192 192c-53 0-103-22-139-61l139-131-179 45c-8-14-13-29-13-45z" fill="#f08063"/>
-  <path d="M105 155h340v2H105zm0 18h252v2H105z" fill="#1e302b"/>
-  <text x="105" y="280" font-family="Arial,sans-serif" font-size="38" font-weight="700" fill="#1e302b">GOOD THINGS</text>
-  <text x="105" y="385" font-family="Arial,sans-serif" font-size="92" font-weight="700" letter-spacing="-8" fill="#1e302b">GROW HERE</text>
-  <text x="105" y="720" font-family="Arial,sans-serif" font-size="16" letter-spacing="4" fill="#1e302b">GOOD SIDE / EVERY DAY</text>
-</svg>

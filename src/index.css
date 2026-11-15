@@ -201,10 +201,9 @@ button { font: inherit; }
 .work-heading { display: flex; align-items: flex-end; justify-content: space-between; gap: 30px; margin: 60px 0 68px; }
 .work-heading h2 { margin: 0; }
 .work-heading p { max-width: 230px; margin: 0 0 7px; color: var(--theme-muted); font-size: 13px; line-height: 1.5; }
-.projects-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 66px 24px; align-items: start; }
-.project-card { display: block; min-width: 0; }
-.project-card-2 { margin-top: 135px; }
-.project-card-3 { grid-column: 1 / 2; }
+.projects-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 66px 24px; align-items: start; padding-bottom: 135px; }
+.project-card { display: block; width: 100%; min-width: 0; padding: 0; border: 0; color: inherit; background: none; font: inherit; text-align: left; cursor: pointer; }
+.project-card:nth-child(even) { transform: translateY(135px); }
 .project-image-frame { position: relative; aspect-ratio: 1.22; overflow: hidden; background: #dfd9cf; }
 .project-image-frame img { position: absolute; inset: -5% 0; width: 100%; height: 110%; object-fit: cover; transition: transform .6s cubic-bezier(.2,.8,.2,1); }
 .project-card:hover .project-image-frame img { transform: scale(1.045); }
@@ -215,7 +214,29 @@ button { font: inherit; }
 .project-meta { display: flex; align-items: flex-start; justify-content: space-between; padding-top: 17px; }
 .project-meta h3 { margin: 0 0 7px; font-size: 19px; letter-spacing: -.04em; }
 .project-meta span { color: var(--theme-muted); font-size: 11px; }
-.project-arrow { color: var(--coral) !important; font-size: 20px !important; }
+.project-number { color: var(--coral) !important; font-size: 13px !important; font-weight: 700; letter-spacing: .08em; }
+.project-badge { position: absolute; top: 16px; left: 16px; display: flex; gap: 8px; align-items: center; padding: 8px 12px; border-radius: 30px; color: var(--paper); background: #111111cc; font-size: 10px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; backdrop-filter: blur(6px); }
+.work-more { display: flex; justify-content: center; margin-top: 70px; }
+.work-more-link { display: inline-flex; gap: 14px; align-items: center; padding: 18px 28px; border: 1px solid currentColor; border-radius: 40px; font-size: 14px; font-weight: 700; transition: color .25s ease, background-color .25s ease; }
+.work-more-link span { color: var(--coral); }
+.work-more-link:hover { color: var(--paper); background: var(--ink); }
+.project-modal-backdrop { position: fixed; z-index: 90; inset: 0; display: grid; place-items: center; padding: 24px; background: #111111d9; backdrop-filter: blur(8px); overflow-y: auto; }
+.project-modal { position: relative; display: grid; grid-template-columns: minmax(0, 1.55fr) minmax(280px, 1fr); width: min(1180px, 100%); max-height: calc(100vh - 48px); overflow: hidden; border-radius: 6px; color: var(--ink); background: var(--paper); box-shadow: 0 30px 80px #0008; }
+.project-modal-image { overflow: auto; background: #dfd9cf; }
+.project-modal-image img { display: block; width: 100%; height: auto; }
+.project-modal-body { display: flex; flex-direction: column; gap: 18px; padding: clamp(26px, 3.5vw, 46px); overflow-y: auto; }
+.project-modal-kicker { display: flex; justify-content: space-between; gap: 12px; padding-right: 44px; color: #6b6760; font-size: 11px; letter-spacing: .1em; text-transform: uppercase; }
+.project-modal-body h3 { margin: 0; font-size: clamp(2.2rem, 4vw, 3.4rem); line-height: .95; letter-spacing: -.06em; }
+.project-modal-body p { margin: 0; color: #3b3935; font-size: 15px; line-height: 1.6; }
+.project-tags { margin-top: 0; }
+.project-tags span { border-color: #11111133 !important; color: var(--ink) !important; }
+.project-modal-actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: auto; padding-top: 10px; }
+.project-action { display: inline-flex; gap: 10px; align-items: center; padding: 14px 20px; border: 1px solid var(--ink); border-radius: 30px; font-size: 13px; font-weight: 700; transition: background-color .2s ease, color .2s ease; }
+.project-action:hover { color: var(--paper); background: var(--ink); }
+.project-action-primary { color: var(--paper); background: var(--ink); }
+.project-action-primary:hover { color: var(--ink); background: var(--coral); border-color: var(--coral); }
+.project-modal-close { position: absolute; z-index: 2; top: 16px; right: 16px; display: grid; place-items: center; width: 40px; height: 40px; border: 0; border-radius: 50%; color: var(--paper); background: var(--ink); font-size: 15px; cursor: pointer; }
+.project-modal-close:hover { background: var(--coral); }
 .contact-section { min-height: 75vh; display: flex; flex-direction: column; justify-content: space-between; color: var(--theme-fg); background: var(--theme-bg); transition: background-color 700ms ease, color 700ms ease; }
 .contact-content { padding: 80px 0 110px; }
 .contact-content p { margin: 0; font-size: clamp(4rem, 11vw, 10rem); line-height: .87; letter-spacing: -.09em; font-weight: 800; }
@@ -253,6 +274,12 @@ button { font: inherit; }
   .section-pad { padding-right: 7vw; padding-left: 7vw; }
   .service-sticky { padding-right: 7vw; padding-left: 7vw; }
   .service-card-content h3 { font-size: clamp(3rem, 10vw, 6rem); }
+}
+@media (max-width: 800px) {
+  .project-modal-backdrop { padding: 0; place-items: end stretch; }
+  .project-modal { grid-template-columns: 1fr; max-height: 92vh; overflow-y: auto; border-radius: 6px 6px 0 0; }
+  .project-modal-image { overflow: visible; }
+  .project-modal-body { overflow: visible; }
 }
 @media (max-width: 520px) {
   .site-header nav { gap: 10px; font-size: 9px; }
@@ -293,8 +320,9 @@ button { font: inherit; }
   .work-heading h2 { margin: 0 0 23px; }
   .work-heading p { max-width: 240px; }
   .projects-grid { grid-template-columns: 1fr; gap: 37px; }
-  .project-card-2 { margin-top: 0; }
-  .project-card-3 { grid-column: auto; }
+  .projects-grid { padding-bottom: 0; }
+  .project-card:nth-child(even) { transform: none; }
+  .work-more { margin-top: 50px; }
   .project-image-frame { aspect-ratio: 1.08; }
   .contact-section { min-height: 72vh; }
   .contact-content { padding: 80px 0; }
