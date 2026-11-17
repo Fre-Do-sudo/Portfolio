@@ -243,6 +243,9 @@ button { font: inherit; }
 .contact-content em { color: var(--coral); font-family: Georgia, serif; font-weight: 400; }
 .contact-email { display: inline-flex; align-items: center; gap: 20px; margin-top: 42px; padding-bottom: 8px; border-bottom: 1px solid currentColor; font-size: clamp(16px, 2vw, 22px); }
 .contact-email span { color: var(--coral); }
+.contact-cv { display: flex; align-items: center; gap: 10px; width: fit-content; margin-top: 22px; color: var(--theme-muted); font-size: clamp(14px, 1.4vw, 16px); text-decoration: none; transition: color .2s ease; }
+.contact-cv span { color: var(--coral); }
+.contact-cv:hover { color: var(--theme-fg); }
 .footer-bottom { display: flex; justify-content: space-between; align-items: center; gap: 20px; padding-top: 24px; border-top: 1px solid color-mix(in srgb, var(--theme-fg) 20%, transparent); color: var(--theme-muted); font-size: 10px; }
 .social-links { display: flex; gap: 20px; }
 .custom-cursor { position: fixed; z-index: 80; inset: 0; pointer-events: none; }

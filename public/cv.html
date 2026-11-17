@@ -1,0 +1,183 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Godfrey Uma Udoaka — CV</title>
+    <meta name="description" content="CV of Godfrey Uma Udoaka, designer and full-stack developer in Nigeria." />
+    <style>
+      :root {
+        --ink: #111111;
+        --paper: #f2f0e9;
+        --sheet: #ffffff;
+        --muted: #5f5f5a;
+        --line: #e4e1d8;
+        --coral: #e2513f;
+      }
+      * { box-sizing: border-box; }
+      html { -webkit-text-size-adjust: 100%; }
+      body {
+        margin: 0;
+        background: var(--paper);
+        color: var(--ink);
+        font-family: Inter, "Helvetica Neue", Helvetica, Arial, sans-serif;
+        font-size: 15px;
+        line-height: 1.55;
+      }
+      a { color: inherit; }
+      .toolbar {
+        max-width: 860px;
+        margin: 0 auto;
+        padding: 20px 16px 0;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        justify-content: space-between;
+        align-items: center;
+      }
+      .toolbar a {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 10px 18px;
+        border-radius: 999px;
+        border: 1px solid var(--ink);
+        text-decoration: none;
+        font-weight: 600;
+        font-size: 14px;
+      }
+      .toolbar .primary { background: var(--ink); color: #fff; }
+      .toolbar .primary:hover { background: var(--coral); border-color: var(--coral); }
+      .toolbar a:not(.primary):hover { background: var(--ink); color: #fff; }
+      .sheet {
+        max-width: 860px;
+        margin: 16px auto 48px;
+        padding: 48px 56px;
+        background: var(--sheet);
+        border-radius: 18px;
+        box-shadow: 0 30px 60px -40px rgba(17, 17, 17, 0.35);
+      }
+      header h1 {
+        margin: 0;
+        font-size: clamp(30px, 6vw, 42px);
+        line-height: 1.05;
+        letter-spacing: -0.02em;
+      }
+      .role { margin: 8px 0 0; font-size: 17px; font-weight: 600; color: var(--coral); }
+      .contact {
+        margin: 12px 0 0;
+        padding: 0;
+        list-style: none;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 4px 18px;
+        color: var(--muted);
+        font-size: 14px;
+      }
+      .contact a { text-decoration: none; border-bottom: 1px solid var(--line); }
+      .contact a:hover { color: var(--ink); border-color: var(--coral); }
+      section { margin-top: 30px; }
+      h2 {
+        margin: 0 0 12px;
+        padding-bottom: 6px;
+        border-bottom: 2px solid var(--ink);
+        font-size: 13px;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+      }
+      p { margin: 0; }
+      dl.skills { margin: 0; display: grid; grid-template-columns: 190px 1fr; gap: 6px 16px; }
+      dl.skills dt { font-weight: 700; }
+      dl.skills dd { margin: 0; }
+      h3 { margin: 0 0 8px; font-size: 16px; }
+      ul.work { margin: 0; padding-left: 18px; display: grid; gap: 10px; }
+      ul.work strong { font-weight: 700; }
+      .site { white-space: nowrap; }
+      .projects { display: grid; gap: 12px; }
+      .projects div { display: grid; gap: 2px; }
+      .projects .stack { color: var(--muted); font-size: 13.5px; }
+      @media (max-width: 640px) {
+        body { font-size: 14.5px; }
+        .sheet { padding: 28px 20px; margin: 12px 8px 32px; border-radius: 14px; }
+        dl.skills { grid-template-columns: 1fr; gap: 2px; }
+        dl.skills dd { margin-bottom: 8px; }
+      }
+      @page { size: A4; margin: 14mm 15mm; }
+      @media print {
+        body { background: #fff; font-size: 11pt; }
+        .toolbar { display: none; }
+        .sheet { margin: 0; padding: 0; max-width: none; box-shadow: none; border-radius: 0; }
+        section { margin-top: 18px; break-inside: avoid-page; }
+        ul.work li, .projects div { break-inside: avoid; }
+        .contact a { border: 0; }
+      }
+    </style>
+  </head>
+  <body>
+    <nav class="toolbar" aria-label="CV actions">
+      <a href="/">← Back to portfolio</a>
+      <a class="primary" href="/Godfrey-Uma-Udoaka-CV.pdf" download>Download PDF ↓</a>
+    </nav>
+    <main class="sheet">
+      <header>
+        <h1>Godfrey Uma Udoaka</h1>
+        <p class="role">Designer &amp; Full-Stack Developer · Nigeria</p>
+        <ul class="contact">
+          <li><a href="mailto:udoakagodfrey@gmail.com">udoakagodfrey@gmail.com</a></li>
+          <li><a href="tel:+2348146719383">+234 814 671 9383</a></li>
+          <li><a href="tel:+2348076425605">+234 807 642 5605</a></li>
+          <li><a href="https://github.com/Fre-Do-sudo">GitHub</a></li>
+          <li><a href="https://portfolio-godfrey7878.vercel.app">Portfolio</a></li>
+        </ul>
+      </header>
+
+      <section>
+        <h2>Professional Summary</h2>
+        <p>Designer and developer who builds thoughtful digital experiences, accessible websites, and distinctive brand identities. Experienced in delivering complete, production-ready web applications for businesses, NGOs, hospitals, and universities, including online payments, database-backed systems, admin dashboards, and email notifications. Comfortable across the full stack, from interface design to server logic and deployment.</p>
+      </section>
+
+      <section>
+        <h2>Technical Skills</h2>
+        <dl class="skills">
+          <dt>Languages</dt><dd>JavaScript, TypeScript, Python, PHP, HTML, CSS, SQL</dd>
+          <dt>Frameworks &amp; Libraries</dt><dd>React, Vite, Tailwind CSS, Framer Motion, Django, Node.js</dd>
+          <dt>Databases</dt><dd>PostgreSQL (including Neon), SQLite</dd>
+          <dt>Services &amp; Tools</dt><dd>Paystack payments, Nodemailer, Brevo, Vercel (hosting and Blob storage), cPanel hosting, Git and GitHub</dd>
+          <dt>Design</dt><dd>UI design, brand identity, accessible web design</dd>
+        </dl>
+      </section>
+
+      <section>
+        <h2>Freelance Experience</h2>
+        <h3>Designer &amp; Full-Stack Developer — Freelance</h3>
+        <ul class="work">
+          <li><strong>Thrift Gallery (online clothing store):</strong> Built a complete e-commerce website for a clothing brand, including a payment system. Built with Node.js, Neon Postgres, Vercel Blob storage, and Nodemailer/Brevo for email, hosted on Vercel. <a class="site" href="https://thriftgallery.vercel.app">thriftgallery.vercel.app</a></li>
+          <li><strong>Udo-Aka Foundation (NGO website):</strong> Designed and built a website for a non-governmental organisation that supports needy families and children. Includes book ordering, online donations through Paystack, and an admin dashboard. Built with PHP, JavaScript, HTML/CSS, and SQLite, deployed on cPanel. <a class="site" href="https://udoakafoundation.org">udoakafoundation.org</a></li>
+          <li><strong>Student Counselling System (university):</strong> Built a counselling management system for a university to support its students. Private system for institutional use.</li>
+          <li><strong>Care-Link (ImmuniReminder / antenatal app):</strong> Built a web app for a hospital to help pregnant women keep track of antenatal care and immunisation reminders. Built with Python, Django 5.2, and PostgreSQL.</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>Selected Projects</h2>
+        <div class="projects">
+          <div><strong>Thrift Gallery</strong><span>Full e-commerce platform with payments, image storage, and transactional email.</span><span class="stack">Node.js, Neon Postgres, Vercel Blob, Nodemailer, Brevo, Vercel</span></div>
+          <div><strong>Udo-Aka Foundation Website</strong><span>Donation and book-order platform with admin dashboard for a charity.</span><span class="stack">PHP, SQLite, Paystack, JavaScript, cPanel</span></div>
+          <div><strong>Student Counselling System</strong><span>University counselling platform for student support.</span><span class="stack">Private project</span></div>
+          <div><strong>Care-Link</strong><span>Healthcare reminder app for pregnant women, open source on GitHub.</span><span class="stack">Python, Django, PostgreSQL</span></div>
+          <div><strong>Personal Portfolio</strong><span>Animated, responsive portfolio showcasing design and development work.</span><span class="stack">React, TypeScript, Vite, Tailwind CSS, Framer Motion</span></div>
+        </div>
+      </section>
+
+      <section>
+        <h2>Education</h2>
+        <p>B.sc. Software Engineering</p>
+      </section>
+
+      <section>
+        <h2>References</h2>
+        <p>Available on request.</p>
+      </section>
+    </main>
+  </body>
+</html>

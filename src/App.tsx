@@ -112,6 +112,7 @@ function ScrollChrome() {
           <a href="#about">About</a>
           <a href="#services">Services</a>
           <a href="#work">Work</a>
+          <a href="/cv">CV</a>
           <MagneticLink href="#contact" className="nav-contact">Let’s talk <span aria-hidden="true">↗</span></MagneticLink>
         </nav>
       </motion.header>
@@ -661,6 +662,7 @@ function Contact() {
       <div className="contact-content">
         <p>Let’s make<br />something <em>matter.</em></p>
         <MagneticLink href={`mailto:${content.email}`} className="contact-email">{content.email}<span aria-hidden="true">↗</span></MagneticLink>
+        <a href="/cv" className="contact-cv">View my CV <span aria-hidden="true">↗</span></a>
       </div>
       <div className="footer-bottom">
         <span>© {new Date().getFullYear()} {content.name}. Made with intention.</span>
